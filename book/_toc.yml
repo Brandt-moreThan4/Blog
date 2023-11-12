@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+chapters:
+- file: content/Ch2_Cross Validation
+- file: content/Ch3_Backtesting
+- file: content/Derivatives
+- file: content/Ch6_Market_Risk_Premium
+- file: content/volatility_drag
