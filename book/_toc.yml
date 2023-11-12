@@ -7,3 +7,4 @@ chapters:
 - file: content/1_Market_Risk_Premium
   # title: MRP Fun # Uncomment to override the sidebar title of the chapter
 - file: content/2_volatility_drag
+- file: content/3_yf_overview
