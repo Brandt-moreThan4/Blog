@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Ch 3: Backtesting &#8212; Apples</title>
+    <title>Yahoo Finance Overview &#8212; Apples</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,10 +50,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/my_boy_neil.jpg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Content with notebooks" href="Derivatives.html" />
-    <link rel="prev" title="Chapter 2: Cross Validation" href="Ch2_Cross%20Validation.html" />
+    <link rel="prev" title="Vol Drag" href="2_volatility_drag.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -115,28 +115,18 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch2_Cross%20Validation.html">
-   Chapter 2: Cross Validation
+  <a class="reference internal" href="1_Market_Risk_Premium.html">
+   Market Risk Premium
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_volatility_drag.html">
+   Vol Drag
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Ch 3: Backtesting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Derivatives.html">
-   Content with notebooks
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Ch6_Market_Risk_Premium.html">
-   Ch6: Market Risk Premium
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="volatility_drag.html">
-   Vol Drag
+   Yahoo Finance Overview
   </a>
  </li>
 </ul>
@@ -198,7 +188,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/Brandt-moreThan4/blog/master?urlpath=tree/book/content/Ch3_Backtesting.md"
+        <a href="https://mybinder.org/v2/gh/Brandt-moreThan4/blog/master?urlpath=tree/book/content/3_yf_overview.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -258,7 +248,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/Brandt-moreThan4/blog/issues/new?title=Issue%20on%20page%20%2Fcontent/Ch3_Backtesting.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/Brandt-moreThan4/blog/issues/new?title=Issue%20on%20page%20%2Fcontent/3_yf_overview.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -286,24 +276,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/content/Ch3_Backtesting.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download notebook file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-code"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="../_sources/content/Ch3_Backtesting.md"
+        <a href="../_sources/content/3_yf_overview.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -314,7 +287,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.md</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
 
       </li>
@@ -363,18 +336,13 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#an-example-cell">
-   An example cell
+  <a class="reference internal nav-link" href="#params">
+   Params
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">
-   Create a notebook with MyST Markdown
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">
-   Quickly add YAML metadata for MyST Notebooks
+  <a class="reference internal nav-link" href="#misc-temp">
+   Misc / Temp
   </a>
  </li>
 </ul>
@@ -386,7 +354,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Ch 3: Backtesting</h1>
+                <h1>Yahoo Finance Overview</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -397,18 +365,13 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#an-example-cell">
-   An example cell
+  <a class="reference internal nav-link" href="#params">
+   Params
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">
-   Create a notebook with MyST Markdown
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">
-   Quickly add YAML metadata for MyST Notebooks
+  <a class="reference internal nav-link" href="#misc-temp">
+   Misc / Temp
   </a>
  </li>
 </ul>
@@ -421,49 +384,173 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="ch-3-backtesting">
-<h1>Ch 3: Backtesting<a class="headerlink" href="#ch-3-backtesting" title="Permalink to this headline">#</a></h1>
-<p>Jupyter Book also lets you write text-based notebooks using MyST Markdown.
-See <a class="reference external" href="https://jupyterbook.org/file-types/myst-notebooks.html">the Notebooks with MyST Markdown documentation</a> for more detailed instructions.
-This page shows off a notebook written in MyST Markdown.</p>
-<section id="an-example-cell">
-<h2>An example cell<a class="headerlink" href="#an-example-cell" title="Permalink to this headline">#</a></h2>
-<p>With MyST Markdown, you can define code cells with a directive like so:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="yahoo-finance-overview">
+<h1>Yahoo Finance Overview<a class="headerlink" href="#yahoo-finance-overview" title="Permalink to this headline">#</a></h1>
+<p>Meant to be a brief overview of some of the basic, common tasks I perform in yahoo finance. It’s likely that I will
+use this as a base for many future notebooks.</p>
+<p>This is meant to serve primarily as a visual quick reference notebook.</p>
+<p><a class="reference external" href="https://github.com/ranaroussi/yfinance">Github Link</a></p>
+<p>To DO:</p>
+<ul class="simple">
+<li><p>Answer the question of yahoo finance’s reliability.</p>
+<ul>
+<li><p>Quality of data</p></li>
+<li><p>Will I get blocked?</p></li>
+<li><p>Is the repo being actively maintained?</p></li>
+</ul>
+</li>
+<li><p>Outline of bunch of basic tasks</p>
+<ul>
+<li><p>Price &amp; Return Data (Most common task)</p>
+<ul>
+<li><p>Add a function to do the cleaning that I like to do.</p></li>
+</ul>
+</li>
+<li><p>Company Info</p>
+<ul>
+<li><p>Pull fundamental data</p></li>
+<li><p>Show what kind of basic info you can observe</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Corporate Actions?</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">xlwings</span> <span class="k">as</span> <span class="nn">xw</span>
+<span class="c1"># plt.style.use(&#39;ggplot&#39;)</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="params">
+<h2>Params<a class="headerlink" href="#params" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UNIVERSAL_START_DATE</span> <span class="o">=</span> <span class="s1">&#39;2000-01-01&#39;</span>
+<span class="n">UNIVERSAL_END_DATE</span> <span class="o">=</span> <span class="s1">&#39;2023-10-31&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="misc-temp">
+<h2>Misc / Temp<a class="headerlink" href="#misc-temp" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># portfolio_tickers = [&#39;AAPL&#39;,&#39;GE&#39;,&#39;TSLA&#39;,&#39;AMZN&#39;,&#39;V&#39;,&#39;MSFT&#39;,&#39;XOM&#39;,&#39;NVDA&#39;,&#39;BAC&#39;,&#39;INTC&#39;,&#39;T&#39;,&#39;NIO&#39;,&#39;GOOGL&#39;,&#39;F&#39;,&#39;PLTR&#39;,&#39;AAL&#39;]</span>
+<span class="n">portfolio_tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span><span class="s1">&#39;KO&#39;</span><span class="p">]</span>
+
+<span class="c1"># Try to download the return data for all of the tickers in the portfolio</span>
+<span class="n">df_data_raw</span> <span class="o">=</span>  <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">portfolio_tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="n">price_col</span> <span class="o">=</span> <span class="s1">&#39;Adj Close&#39;</span>
+<span class="n">df_price</span> <span class="o">=</span> <span class="n">df_data_raw</span><span class="p">[</span><span class="n">price_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_price</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_price</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df_rets</span> <span class="o">=</span> <span class="n">df_price</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+<span class="n">df_rets</span>  <span class="o">=</span> <span class="n">df_rets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">UNIVERSAL_START_DATE</span><span class="p">:</span><span class="n">UNIVERSAL_END_DATE</span><span class="p">,:]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> 
+<span class="n">df_rets</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
-</pre></div>
-</div>
-</div>
-</div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Jupyter Book uses <a class="reference external" href="https://jupytext.readthedocs.io/en/latest/">Jupytext</a> to convert text-based files to notebooks, and can support <a class="reference external" href="https://jupyterbook.org/file-types/jupytext.html">many other text-based notebook files</a>.</p>
-</div>
-</section>
-<section id="create-a-notebook-with-myst-markdown">
-<h2>Create a notebook with MyST Markdown<a class="headerlink" href="#create-a-notebook-with-myst-markdown" title="Permalink to this headline">#</a></h2>
-<p>MyST Markdown notebooks are defined by two things:</p>
-<ol class="simple">
-<li><p>YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-See the YAML at the top of this page for example.</p></li>
-<li><p>The presence of <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> directives, which will be executed with your book.</p></li>
-</ol>
-<p>That’s all that is needed to get started!</p>
-</section>
-<section id="quickly-add-yaml-metadata-for-myst-notebooks">
-<h2>Quickly add YAML metadata for MyST Notebooks<a class="headerlink" href="#quickly-add-yaml-metadata-for-myst-notebooks" title="Permalink to this headline">#</a></h2>
-<p>If you have a markdown file and you’d like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">markdownfile</span><span class="o">.</span><span class="n">md</span>
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AAPL</th>
+      <th>KO</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-03</th>
+      <td>0.088754</td>
+      <td>-0.032188</td>
+    </tr>
+    <tr>
+      <th>2000-01-04</th>
+      <td>-0.084310</td>
+      <td>0.001108</td>
+    </tr>
+    <tr>
+      <th>2000-01-05</th>
+      <td>0.014633</td>
+      <td>0.008859</td>
+    </tr>
+    <tr>
+      <th>2000-01-06</th>
+      <td>-0.086539</td>
+      <td>0.001098</td>
+    </tr>
+    <tr>
+      <th>2000-01-07</th>
+      <td>0.047369</td>
+      <td>0.065789</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-10-25</th>
+      <td>-0.013492</td>
+      <td>0.008627</td>
+    </tr>
+    <tr>
+      <th>2023-10-26</th>
+      <td>-0.024606</td>
+      <td>-0.006058</td>
+    </tr>
+    <tr>
+      <th>2023-10-27</th>
+      <td>0.007969</td>
+      <td>-0.009681</td>
+    </tr>
+    <tr>
+      <th>2023-10-30</th>
+      <td>0.012305</td>
+      <td>0.016474</td>
+    </tr>
+    <tr>
+      <th>2023-10-31</th>
+      <td>0.002819</td>
+      <td>0.006055</td>
+    </tr>
+  </tbody>
+</table>
+<p>5996 rows × 2 columns</p>
+</div></div></div>
 </div>
 </section>
 </section>
@@ -495,19 +582,12 @@ See the YAML at the top of this page for example.</p></li>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Ch2_Cross%20Validation.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="2_volatility_drag.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Chapter 2: Cross Validation</p>
+            <p class="prev-next-title">Vol Drag</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="Derivatives.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Content with notebooks</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

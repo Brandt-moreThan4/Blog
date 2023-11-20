@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Ch6: Market Risk Premium &#8212; Apples</title>
+    <title>Market Risk Premium &#8212; Apples</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,10 +52,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/my_boy_neil.jpg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Vol Drag" href="volatility_drag.html" />
-    <link rel="prev" title="Content with notebooks" href="Derivatives.html" />
+    <link rel="next" title="Vol Drag" href="2_volatility_drag.html" />
+    <link rel="prev" title="Fun with Apples" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,28 +117,13 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Ch2_Cross%20Validation.html">
-   Chapter 2: Cross Validation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Ch3_Backtesting.html">
-   Ch 3: Backtesting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Derivatives.html">
-   Content with notebooks
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Ch6: Market Risk Premium
+   Market Risk Premium
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="volatility_drag.html">
+  <a class="reference internal" href="2_volatility_drag.html">
    Vol Drag
   </a>
  </li>
@@ -200,7 +186,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/Brandt-moreThan4/blog/master?urlpath=tree/book/content/Ch6_Market_Risk_Premium.ipynb"
+        <a href="https://mybinder.org/v2/gh/Brandt-moreThan4/blog/master?urlpath=tree/book/content/1_Market_Risk_Premium.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -260,7 +246,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/Brandt-moreThan4/blog/issues/new?title=Issue%20on%20page%20%2Fcontent/Ch6_Market_Risk_Premium.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/Brandt-moreThan4/blog/issues/new?title=Issue%20on%20page%20%2Fcontent/1_Market_Risk_Premium.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -288,7 +274,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/content/Ch6_Market_Risk_Premium.ipynb"
+        <a href="../_sources/content/1_Market_Risk_Premium.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -337,7 +323,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Ch6: Market Risk Premium</h1>
+                <h1>Market Risk Premium</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -349,8 +335,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="ch6-market-risk-premium">
-<h1>Ch6: Market Risk Premium<a class="headerlink" href="#ch6-market-risk-premium" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="market-risk-premium">
+<h1>Market Risk Premium<a class="headerlink" href="#market-risk-premium" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p>Single Investment</p></li>
 <li><p>Multiple Investments, a “Market” where you can buy and sell</p></li>
@@ -443,13 +429,13 @@ $<span class="math notranslate nohighlight">\(.5*150 +.5*50 = 100\)</span>$</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>150</td>
-      <td>52</td>
+      <td>50</td>
+      <td>-48</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>150</td>
-      <td>52</td>
+      <td>50</td>
+      <td>-48</td>
     </tr>
     <tr>
       <th>2</th>
@@ -458,8 +444,8 @@ $<span class="math notranslate nohighlight">\(.5*150 +.5*50 = 100\)</span>$</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>150</td>
-      <td>52</td>
+      <td>50</td>
+      <td>-48</td>
     </tr>
     <tr>
       <th>4</th>
@@ -484,7 +470,7 @@ $<span class="math notranslate nohighlight">\(.5*150 +.5*50 = 100\)</span>$</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09358286757992712
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09363418975674648
 </pre></div>
 </div>
 </div>
@@ -502,7 +488,7 @@ $<span class="math notranslate nohighlight">\(.5*150 +.5*50 = 100\)</span>$</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09993631168855033
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10010530039251098
 </pre></div>
 </div>
 </div>
@@ -536,14 +522,14 @@ $<span class="math notranslate nohighlight">\(.5*150 +.5*50 = 100\)</span>$</p>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Derivatives.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Content with notebooks</p>
+            <p class="prev-next-title">Fun with Apples</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="volatility_drag.html" title="next page">
+    <a class='right-next' id="next-link" href="2_volatility_drag.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Vol Drag</p>
