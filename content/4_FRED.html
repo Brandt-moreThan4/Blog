@@ -355,6 +355,28 @@ title="Print to PDF"
    Helpful Functions
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gdp-growth">
+     GDP Growth
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inflation">
+     Inflation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vix">
+     VIX
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
     </nav>
@@ -389,6 +411,28 @@ title="Print to PDF"
    Helpful Functions
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gdp-growth">
+     GDP Growth
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inflation">
+     Inflation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vix">
+     VIX
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
                         </nav>
@@ -408,37 +452,6 @@ have always used is <a class="reference external" href="https://github.com/morta
 <ul class="simple">
 <li><p>show how to get unrevised data</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">xlwings</span> <span class="k">as</span> <span class="nn">xw</span>
-<span class="kn">import</span> <span class="nn">researchtools.api</span> <span class="k">as</span> <span class="nn">rt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_20200</span>\<span class="mf">3475486766.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">xlwings</span> <span class="k">as</span> <span class="nn">xw</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">researchtools.api</span> <span class="k">as</span> <span class="nn">rt</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;researchtools&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="establishing-a-fred-object">
 <h2>Establishing a FRED object<a class="headerlink" href="#establishing-a-fred-object" title="Permalink to this headline">#</a></h2>
 <p>Step one when using FRED is to import the package and establish a master “fred” object. The fred object is the primary work horse and will be doing most of the heavy lifting.</p>
@@ -457,65 +470,660 @@ have always used is <a class="reference external" href="https://github.com/morta
 <h2>Requesting Data<a class="headerlink" href="#requesting-data" title="Permalink to this headline">#</a></h2>
 <p>Now, let’s say we would like to see the US Nominal GDP growth over time. The steps to doing this are:</p>
 <ol class="simple">
-<li><p>Find the data on FRED (Google tends to work better than directly searching in fred)</p>
+<li><p>Find the <a class="reference external" href="https://fred.stlouisfed.org/series/GDP">data</a> on FRED (Google tends to work better than directly searching in fred)</p>
 <ul class="simple">
 <li><p>My search: “fred us nominal gdp”</p></li>
 </ul>
 </li>
-<li><p>Check that this is the series you want.</p></li>
+<li><p>Verify this is the data you want.</p></li>
 <li><p>Copy the series ID: found in the url or right after the title of the series.</p></li>
 <li><p>Call the ‘get_series’ method on the fred object and pass the series ID as an argument:</p></li>
 </ol>
 <br>
 <p><img alt="FRED" src="../_images/GDP_snip.PNG" /></p>
-<p>Note: There are other arugments you can pass to the ‘get_series’ method, such as start and end datess, but I tend to request all of the data and do any filtering I may want later.</p>
+<p>Note: There are other arugments you can pass to the ‘get_series’ method, such as start and end dates, but I tend to request all of the data and do any filtering I may want later.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">us_nominal_gdp</span> <span class="o">=</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull Data:</span>
+<span class="n">us_nominal_gdp</span> <span class="o">=</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>
+
+<span class="c1"># For some reason, FRED returns the values in 1946 as nan, so drop those:</span>
+<span class="n">us_nominal_gdp</span> <span class="o">=</span> <span class="n">us_nominal_gdp</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Also, I think the data prints prettier in the notebook if it is converted to a DataFrame:</span>
+<span class="n">us_nominal_gdp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">us_nominal_gdp</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">])</span>
 <span class="n">us_nominal_gdp</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1946-01-01          NaN
-1946-04-01          NaN
-1946-07-01          NaN
-1946-10-01          NaN
-1947-01-01      243.164
-                ...    
-2022-07-01    25994.639
-2022-10-01    26408.405
-2023-01-01    26813.601
-2023-04-01    27063.012
-2023-07-01    27623.543
-Length: 311, dtype: float64
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GDP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1947-01-01</th>
+      <td>243.164</td>
+    </tr>
+    <tr>
+      <th>1947-04-01</th>
+      <td>245.968</td>
+    </tr>
+    <tr>
+      <th>1947-07-01</th>
+      <td>249.585</td>
+    </tr>
+    <tr>
+      <th>1947-10-01</th>
+      <td>259.745</td>
+    </tr>
+    <tr>
+      <th>1948-01-01</th>
+      <td>265.742</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2022-07-01</th>
+      <td>25994.639</td>
+    </tr>
+    <tr>
+      <th>2022-10-01</th>
+      <td>26408.405</td>
+    </tr>
+    <tr>
+      <th>2023-01-01</th>
+      <td>26813.601</td>
+    </tr>
+    <tr>
+      <th>2023-04-01</th>
+      <td>27063.012</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>27623.543</td>
+    </tr>
+  </tbody>
+</table>
+<p>307 rows × 1 columns</p>
+</div></div></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Request nominal and real gdp  </span>
-<span class="n">gdps</span> <span class="o">=</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s1">&#39;GDPC1&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>That’s basically all there is to it!</p>
 </section>
 <section id="helpful-functions">
 <h2>Helpful Functions<a class="headerlink" href="#helpful-functions" title="Permalink to this headline">#</a></h2>
+<p>There are a few tasks that I tend to do frequently when working with FRED data and some enhancements I like on top of the data initially returned from the api. Because of that, I have a few helper functions that I use as a wrapper around the api that I primarily interact with. Some of these tasks are:</p>
+<ul class="simple">
+<li><p>Converting from series to a dataframe.</p></li>
+<li><p>Providing a better name for the data, rather than the FRED series id.</p></li>
+<li><p>Send in an iterable of ids to request the data in bulk.</p></li>
+<li><p>Merge the data together</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_fred_data</span><span class="p">(</span><span class="n">series_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_fred_data_series</span><span class="p">(</span><span class="n">series_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;This function pulls data from FRED and returns it as a DataFrame, if you input a name, it will use that as the</span>
+<span class="sd">      column name, otherwise it will use the series_id as the column name. &#39;&#39;&#39;</span>
+    
     <span class="n">data_name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">series_id</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="n">series_id</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
     <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_name</span><span class="p">]</span>
     <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;date&quot;</span>
     <span class="k">return</span> <span class="n">df</span>
+
+<span class="k">def</span> <span class="nf">get_fred_data</span><span class="p">(</span><span class="n">series_ids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span><span class="nb">str</span><span class="p">],</span> <span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="n">merge_data</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span><span class="nb">dict</span><span class="p">]:</span>
+
+    <span class="c1"># If the input was a string, we can just call the get_fred_data_series function once right now and return the result</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">series_ids</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_fred_data_series</span><span class="p">(</span><span class="n">series_ids</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+    
+
+    <span class="n">names</span> <span class="o">=</span> <span class="n">names</span> <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">series_ids</span>
+    <span class="n">ids_and_names</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">series_ids</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+    <span class="c1"># Now pull the data</span>
+    <span class="n">all_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_fred_data_series</span><span class="p">(</span><span class="n">series_id</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">series_id</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ids_and_names</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">merge_data</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">series_ids</span><span class="p">,</span><span class="n">all_data</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Test out the function.</p>
+<p>One dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_fred_data</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GDP</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2022-07-01</th>
+      <td>25994.639</td>
+    </tr>
+    <tr>
+      <th>2022-10-01</th>
+      <td>26408.405</td>
+    </tr>
+    <tr>
+      <th>2023-01-01</th>
+      <td>26813.601</td>
+    </tr>
+    <tr>
+      <th>2023-04-01</th>
+      <td>27063.012</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>27623.543</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Multiple Series, that we want to combine - GDP &amp; Real GDP:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATA_TO_REQUEST</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;GDPC1&#39;</span><span class="p">]</span>
+<span class="n">DATA_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;Real GDP&#39;</span><span class="p">]</span>
+<span class="n">gdp_df</span> <span class="o">=</span> <span class="n">get_fred_data</span><span class="p">(</span><span class="n">DATA_TO_REQUEST</span><span class="p">,</span> <span class="n">DATA_NAMES</span><span class="p">)</span>
+<span class="n">gdp_df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GDP</th>
+      <th>Real GDP</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2022-07-01</th>
+      <td>25994.639</td>
+      <td>21851.134</td>
+    </tr>
+    <tr>
+      <th>2022-10-01</th>
+      <td>26408.405</td>
+      <td>21989.981</td>
+    </tr>
+    <tr>
+      <th>2023-01-01</th>
+      <td>26813.601</td>
+      <td>22112.329</td>
+    </tr>
+    <tr>
+      <th>2023-04-01</th>
+      <td>27063.012</td>
+      <td>22225.350</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>27623.543</td>
+      <td>22491.567</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Beautiful, now test how it looks if we don’t want to combine the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATA_TO_REQUEST</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;GDPC1&#39;</span><span class="p">,</span><span class="s1">&#39;CPIAUCSL&#39;</span><span class="p">]</span>
+<span class="n">DATA_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;Real GDP&#39;</span><span class="p">,</span><span class="s1">&#39;cpi&#39;</span><span class="p">]</span>
+<span class="n">data_dict</span> <span class="o">=</span> <span class="n">get_fred_data</span><span class="p">(</span><span class="n">DATA_TO_REQUEST</span><span class="p">,</span> <span class="n">DATA_NAMES</span><span class="p">,</span><span class="n">merge_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Show me the inflation data:</span>
+<span class="n">data_dict</span><span class="p">[</span><span class="s1">&#39;CPIAUCSL&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cpi</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1947-01-01</th>
+      <td>21.480</td>
+    </tr>
+    <tr>
+      <th>1947-02-01</th>
+      <td>21.620</td>
+    </tr>
+    <tr>
+      <th>1947-03-01</th>
+      <td>22.000</td>
+    </tr>
+    <tr>
+      <th>1947-04-01</th>
+      <td>22.000</td>
+    </tr>
+    <tr>
+      <th>1947-05-01</th>
+      <td>21.950</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-06-01</th>
+      <td>303.841</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>304.348</td>
+    </tr>
+    <tr>
+      <th>2023-08-01</th>
+      <td>306.269</td>
+    </tr>
+    <tr>
+      <th>2023-09-01</th>
+      <td>307.481</td>
+    </tr>
+    <tr>
+      <th>2023-10-01</th>
+      <td>307.619</td>
+    </tr>
+  </tbody>
+</table>
+<p>922 rows × 1 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<section id="gdp-growth">
+<h3>GDP Growth<a class="headerlink" href="#gdp-growth" title="Permalink to this headline">#</a></h3>
+<p>Let’s look at the growth of both nominal and real gdp in the US.</p>
+<ul class="simple">
+<li><p>Why do people annualize by multiplying by 4 instead for raising to fourth power. I have no idea. I think it is just convention.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Request the data and verify that it looks ok:</span>
+<span class="n">DATA_TO_REQUEST</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;GDPC1&#39;</span><span class="p">]</span>
+<span class="n">DATA_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">,</span><span class="s1">&#39;Real_GDP&#39;</span><span class="p">]</span>
+<span class="n">gdp_df</span> <span class="o">=</span> <span class="n">get_fred_data</span><span class="p">(</span><span class="n">DATA_TO_REQUEST</span><span class="p">,</span> <span class="n">DATA_NAMES</span><span class="p">)</span>
+
+<span class="c1"># Calculate the Quarterly Growth Rate:</span>
+<span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Real_GDP_Growth_Q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Real_GDP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Nominal_GDP_Growth_Q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;GDP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Calculate the Annualized Growth Rate:</span>
+<span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Real_GDP_Growth_Annualized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Real_GDP_Growth_Q&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Nominal_GDP_Growth_Annualized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Nominal_GDP_Growth_Q&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+
+<span class="c1"># Drop NaNs that were introducted by the pct_change function (We also need to drop those NANs from 1926.) </span>
+<span class="n">gdp_df</span> <span class="o">=</span> <span class="n">gdp_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">gdp_df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GDP</th>
+      <th>Real_GDP</th>
+      <th>Real_GDP_Growth_Q</th>
+      <th>Nominal_GDP_Growth_Q</th>
+      <th>Real_GDP_Growth_Annualized</th>
+      <th>Nominal_GDP_Growth_Annualized</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2022-07-01</th>
+      <td>25994.639</td>
+      <td>21851.134</td>
+      <td>0.006586</td>
+      <td>0.017631</td>
+      <td>0.026345</td>
+      <td>0.070523</td>
+    </tr>
+    <tr>
+      <th>2022-10-01</th>
+      <td>26408.405</td>
+      <td>21989.981</td>
+      <td>0.006354</td>
+      <td>0.015917</td>
+      <td>0.025417</td>
+      <td>0.063669</td>
+    </tr>
+    <tr>
+      <th>2023-01-01</th>
+      <td>26813.601</td>
+      <td>22112.329</td>
+      <td>0.005564</td>
+      <td>0.015343</td>
+      <td>0.022255</td>
+      <td>0.061374</td>
+    </tr>
+    <tr>
+      <th>2023-04-01</th>
+      <td>27063.012</td>
+      <td>22225.350</td>
+      <td>0.005111</td>
+      <td>0.009302</td>
+      <td>0.020445</td>
+      <td>0.037207</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>27623.543</td>
+      <td>22491.567</td>
+      <td>0.011978</td>
+      <td>0.020712</td>
+      <td>0.047912</td>
+      <td>0.082848</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the data:</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Real_GDP_Growth_Annualized&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real GDP Growth&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gdp_df</span><span class="p">[</span><span class="s1">&#39;Nominal_GDP_Growth_Annualized&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Nominal GDP Growth&#39;</span><span class="p">)</span>
+<span class="c1"># ax.plot(gdp_df[&#39;Real_GDP&#39;], label=&#39;Real GDP&#39;)</span>
+<span class="c1"># ax.plot(gdp_df[&#39;GDP&#39;], label=&#39;Nominal GDP&#39;)</span>
+<span class="c1"># Format the y axis as a percent:</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:,.0%}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\User\AppData\Local\Temp\ipykernel_17380\2846428898.py:8: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([&#39;{:,.0%}&#39;.format(x) for x in ax.get_yticks()])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&#39;
+</pre></div>
+</div>
+<img alt="../_images/4_FRED_21_2.png" src="../_images/4_FRED_21_2.png" />
+</div>
+</div>
+</section>
+<section id="inflation">
+<h3>Inflation<a class="headerlink" href="#inflation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">INFLATION_SERIES</span> <span class="o">=</span> <span class="s1">&#39;CPIAUCSL&#39;</span>
+<span class="n">inflation_df</span> <span class="o">=</span> <span class="n">get_fred_data</span><span class="p">(</span><span class="n">INFLATION_SERIES</span><span class="p">)</span>
+<span class="c1"># Month over month change</span>
+<span class="n">inflation_df</span><span class="p">[</span><span class="s1">&#39;Inflation_MoM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inflation_df</span><span class="p">[</span><span class="s1">&#39;CPIAUCSL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># YoY change</span>
+<span class="n">inflation_df</span><span class="p">[</span><span class="s1">&#39;Inflation_YoY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inflation_df</span><span class="p">[</span><span class="s1">&#39;CPIAUCSL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Drop nas:</span>
+<span class="n">inflation_df</span> <span class="o">=</span> <span class="n">inflation_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">inflation_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CPIAUCSL</th>
+      <th>Inflation_MoM</th>
+      <th>Inflation_YoY</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1948-01-01</th>
+      <td>23.680</td>
+      <td>0.011534</td>
+      <td>0.102421</td>
+    </tr>
+    <tr>
+      <th>1948-02-01</th>
+      <td>23.670</td>
+      <td>-0.000422</td>
+      <td>0.094820</td>
+    </tr>
+    <tr>
+      <th>1948-03-01</th>
+      <td>23.500</td>
+      <td>-0.007182</td>
+      <td>0.068182</td>
+    </tr>
+    <tr>
+      <th>1948-04-01</th>
+      <td>23.820</td>
+      <td>0.013617</td>
+      <td>0.082727</td>
+    </tr>
+    <tr>
+      <th>1948-05-01</th>
+      <td>24.010</td>
+      <td>0.007976</td>
+      <td>0.093850</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-06-01</th>
+      <td>303.841</td>
+      <td>0.001804</td>
+      <td>0.030920</td>
+    </tr>
+    <tr>
+      <th>2023-07-01</th>
+      <td>304.348</td>
+      <td>0.001669</td>
+      <td>0.032991</td>
+    </tr>
+    <tr>
+      <th>2023-08-01</th>
+      <td>306.269</td>
+      <td>0.006312</td>
+      <td>0.037075</td>
+    </tr>
+    <tr>
+      <th>2023-09-01</th>
+      <td>307.481</td>
+      <td>0.003957</td>
+      <td>0.036899</td>
+    </tr>
+    <tr>
+      <th>2023-10-01</th>
+      <td>307.619</td>
+      <td>0.000449</td>
+      <td>0.032324</td>
+    </tr>
+  </tbody>
+</table>
+<p>910 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="c1"># ax.plot(inflation_df[&#39;Inflation_MoM&#39;], label=&#39;Inflation MoM&#39;)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">inflation_df</span><span class="p">[</span><span class="s1">&#39;Inflation_YoY&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Inflation YoY&#39;</span><span class="p">)</span>
+<span class="c1"># Format the y axis as a percent:</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:,.0%}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Inflation YoY - CPI&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\User\AppData\Local\Temp\ipykernel_17380\2205478150.py:5: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([&#39;{:,.0%}&#39;.format(x) for x in ax.get_yticks()])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&#39;
+</pre></div>
+</div>
+<img alt="../_images/4_FRED_25_2.png" src="../_images/4_FRED_25_2.png" />
+</div>
+</div>
+</section>
+<section id="vix">
+<h3>VIX<a class="headerlink" href="#vix" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">VIX_SERIES</span> <span class="o">=</span> <span class="s1">&#39;VIXCLS&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
