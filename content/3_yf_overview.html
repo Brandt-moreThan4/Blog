@@ -342,13 +342,28 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hidden-code">
+   Hidden Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#params">
    Params
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#misc-temp">
-   Misc / Temp
+  <a class="reference internal nav-link" href="#price-returns">
+   Price &amp; Returns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#company-info">
+   Company Info
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
   </a>
  </li>
 </ul>
@@ -371,13 +386,28 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hidden-code">
+   Hidden Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#params">
    Params
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#misc-temp">
-   Misc / Temp
+  <a class="reference internal nav-link" href="#price-returns">
+   Price &amp; Returns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#company-info">
+   Company Info
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
   </a>
  </li>
 </ul>
@@ -398,20 +428,8 @@ use this as a base for many future notebooks.</p>
 <p><a class="reference external" href="https://github.com/ranaroussi/yfinance">Github Link</a></p>
 <p>To DO:</p>
 <ul class="simple">
-<li><p>Answer the question of yahoo finance’s reliability.</p>
-<ul>
-<li><p>Quality of data</p></li>
-<li><p>Will I get blocked?</p></li>
-<li><p>Is the repo being actively maintained?</p></li>
-</ul>
-</li>
 <li><p>Outline of bunch of basic tasks</p>
 <ul>
-<li><p>Price &amp; Return Data (Most common task)</p>
-<ul>
-<li><p>Add a function to do the cleaning that I like to do.</p></li>
-</ul>
-</li>
 <li><p>Company Info</p>
 <ul>
 <li><p>Pull fundamental data</p></li>
@@ -426,18 +444,85 @@ use this as a base for many future notebooks.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-<span class="kn">import</span> <span class="nn">xlwings</span> <span class="k">as</span> <span class="nn">xw</span>
-<span class="c1"># plt.style.use(&#39;ggplot&#39;)</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">xlwings</span> <span class="k">as</span> <span class="nn">xw</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span>
+
+<span class="c1"># Bunch of matplotlib setup</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+
+
+
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FuncFormatter</span>
+<span class="k">def</span> <span class="nf">percentage_formatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Formats the y-axis labels as percentages. &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">.1%</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="n">ALTAFID_COLORS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;#3f4c60&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#93c9f9&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#94045b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#83889d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#ffc000&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#386f98&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#9dabd3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#b80571&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#45ad35&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#b38825&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#525e70&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#98bbdc&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#aa6597&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#6abd5d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#716920&quot;</span><span class="p">,</span>
+    <span class="p">]</span>  
+<span class="k">def</span> <span class="nf">set_mpl_colors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+    <span class="kn">from</span> <span class="nn">cycler</span> <span class="kn">import</span> <span class="n">cycler</span>
+
+
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.prop_cycle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cycler</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">ALTAFID_COLORS</span><span class="p">)</span>
+<span class="n">set_mpl_colors</span><span class="p">()</span>
+
+
+<span class="c1"># pd.set_option(&#39;display.float_format&#39;, lambda x: f&#39;{x:,.4}&#39;)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="hidden-code">
+<h2>Hidden Code<a class="headerlink" href="#hidden-code" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">color_pos_neg</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Format positive numbers in green and negative numbers in red. &#39;&#39;&#39;</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;green&#39;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="k">def</span> <span class="nf">display_prettified_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Display a dataframe with some nice formatting. &#39;&#39;&#39;</span>
+    <span class="c1"># Copy so that we can modify the dataframe without affecting the original</span>
+    <span class="n">df_display</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Convert the index to strings</span>
+    <span class="n">df_display</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df_display</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Format the numbers</span>
+    <span class="n">df_display</span> <span class="o">=</span> <span class="n">df_display</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.2%}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Apply the color formatting</span>
+    <span class="n">df_display</span> <span class="o">=</span> <span class="n">df_display</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">color_pos_neg</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_display</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="params">
 <h2>Params<a class="headerlink" href="#params" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
@@ -449,23 +534,489 @@ use this as a base for many future notebooks.</p>
 </div>
 </div>
 </section>
-<section id="misc-temp">
-<h2>Misc / Temp<a class="headerlink" href="#misc-temp" title="Permalink to this headline">#</a></h2>
+<section id="price-returns">
+<h2>Price &amp; Returns<a class="headerlink" href="#price-returns" title="Permalink to this headline">#</a></h2>
+<p>The most basic and recurrent task that I use Yahoo Finance for is downloading price data, typically with the goal of calculating returns. So let’s see it in action.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># portfolio_tickers = [&#39;AAPL&#39;,&#39;GE&#39;,&#39;TSLA&#39;,&#39;AMZN&#39;,&#39;V&#39;,&#39;MSFT&#39;,&#39;XOM&#39;,&#39;NVDA&#39;,&#39;BAC&#39;,&#39;INTC&#39;,&#39;T&#39;,&#39;NIO&#39;,&#39;GOOGL&#39;,&#39;F&#39;,&#39;PLTR&#39;,&#39;AAL&#39;]</span>
-<span class="n">portfolio_tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span><span class="s1">&#39;KO&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TICKERS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span><span class="s1">&#39;GE&#39;</span><span class="p">,</span><span class="s1">&#39;TSLA&#39;</span><span class="p">,</span><span class="s1">&#39;AMZN&#39;</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="s1">&#39;MSFT&#39;</span><span class="p">,</span><span class="s1">&#39;XOM&#39;</span><span class="p">]</span>
 
-<span class="c1"># Try to download the return data for all of the tickers in the portfolio</span>
-<span class="n">df_data_raw</span> <span class="o">=</span>  <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">portfolio_tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Download basic pricing data for all of the tickers in the portfolio</span>
+<span class="n">df_data_raw</span> <span class="o">=</span>  <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">TICKERS</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_data_raw</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="n">price_col</span> <span class="o">=</span> <span class="s1">&#39;Adj Close&#39;</span>
-<span class="n">df_price</span> <span class="o">=</span> <span class="n">df_data_raw</span><span class="p">[</span><span class="n">price_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">df_price</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_price</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-<span class="n">df_rets</span> <span class="o">=</span> <span class="n">df_price</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
-<span class="n">df_rets</span>  <span class="o">=</span> <span class="n">df_rets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">UNIVERSAL_START_DATE</span><span class="p">:</span><span class="n">UNIVERSAL_END_DATE</span><span class="p">,:]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> 
-<span class="n">df_rets</span>
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="7" halign="left">Adj Close</th>
+      <th colspan="3" halign="left">Close</th>
+      <th>...</th>
+      <th colspan="3" halign="left">Open</th>
+      <th colspan="7" halign="left">Volume</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>AAPL</th>
+      <th>AMZN</th>
+      <th>GE</th>
+      <th>MSFT</th>
+      <th>TSLA</th>
+      <th>V</th>
+      <th>XOM</th>
+      <th>AAPL</th>
+      <th>AMZN</th>
+      <th>GE</th>
+      <th>...</th>
+      <th>TSLA</th>
+      <th>V</th>
+      <th>XOM</th>
+      <th>AAPL</th>
+      <th>AMZN</th>
+      <th>GE</th>
+      <th>MSFT</th>
+      <th>TSLA</th>
+      <th>V</th>
+      <th>XOM</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1962-01-02</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.784582</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.095784</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.675709</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>345317</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>902400</td>
+    </tr>
+    <tr>
+      <th>1962-01-03</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.776711</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.097206</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.628796</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>236606</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1200000</td>
+    </tr>
+    <tr>
+      <th>1962-01-04</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.767526</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.097443</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.574063</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>294159</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1088000</td>
+    </tr>
+    <tr>
+      <th>1962-01-05</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.747846</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.095310</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.456780</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>436442</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1222400</td>
+    </tr>
+    <tr>
+      <th>1962-01-08</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.746534</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.095073</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.448961</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>495593</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1388800</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-11-27</th>
+      <td>189.789993</td>
+      <td>147.729996</td>
+      <td>119.970001</td>
+      <td>378.609985</td>
+      <td>236.080002</td>
+      <td>254.139999</td>
+      <td>103.959999</td>
+      <td>189.789993</td>
+      <td>147.729996</td>
+      <td>119.970001</td>
+      <td>...</td>
+      <td>236.889999</td>
+      <td>254.300003</td>
+      <td>104.099998</td>
+      <td>40552600.0</td>
+      <td>53762400.0</td>
+      <td>3179900</td>
+      <td>22179200.0</td>
+      <td>112031800.0</td>
+      <td>5478900.0</td>
+      <td>18013500</td>
+    </tr>
+    <tr>
+      <th>2023-11-28</th>
+      <td>190.399994</td>
+      <td>147.029999</td>
+      <td>118.849998</td>
+      <td>382.700012</td>
+      <td>246.720001</td>
+      <td>252.940002</td>
+      <td>103.900002</td>
+      <td>190.399994</td>
+      <td>147.029999</td>
+      <td>118.849998</td>
+      <td>...</td>
+      <td>236.679993</td>
+      <td>253.850006</td>
+      <td>104.239998</td>
+      <td>38415400.0</td>
+      <td>42711700.0</td>
+      <td>3494100</td>
+      <td>20453100.0</td>
+      <td>148549900.0</td>
+      <td>5234900.0</td>
+      <td>20629500</td>
+    </tr>
+    <tr>
+      <th>2023-11-29</th>
+      <td>189.369995</td>
+      <td>146.320007</td>
+      <td>118.860001</td>
+      <td>378.850006</td>
+      <td>244.139999</td>
+      <td>254.229996</td>
+      <td>102.339996</td>
+      <td>189.369995</td>
+      <td>146.320007</td>
+      <td>118.860001</td>
+      <td>...</td>
+      <td>249.210007</td>
+      <td>253.919998</td>
+      <td>104.269997</td>
+      <td>43014200.0</td>
+      <td>40610900.0</td>
+      <td>3027000</td>
+      <td>28963400.0</td>
+      <td>135401300.0</td>
+      <td>4955100.0</td>
+      <td>26802100</td>
+    </tr>
+    <tr>
+      <th>2023-11-30</th>
+      <td>189.949997</td>
+      <td>146.089996</td>
+      <td>121.800003</td>
+      <td>378.910004</td>
+      <td>240.080002</td>
+      <td>256.679993</td>
+      <td>102.739998</td>
+      <td>189.949997</td>
+      <td>146.089996</td>
+      <td>121.800003</td>
+      <td>...</td>
+      <td>245.139999</td>
+      <td>254.250000</td>
+      <td>103.110001</td>
+      <td>48794400.0</td>
+      <td>65814000.0</td>
+      <td>8120200</td>
+      <td>30554400.0</td>
+      <td>132353200.0</td>
+      <td>6874700.0</td>
+      <td>29254700</td>
+    </tr>
+    <tr>
+      <th>2023-12-01</th>
+      <td>191.240005</td>
+      <td>147.029999</td>
+      <td>122.500000</td>
+      <td>374.510010</td>
+      <td>238.830002</td>
+      <td>256.450012</td>
+      <td>102.989998</td>
+      <td>191.240005</td>
+      <td>147.029999</td>
+      <td>122.500000</td>
+      <td>...</td>
+      <td>233.139999</td>
+      <td>255.789993</td>
+      <td>102.500000</td>
+      <td>45679300.0</td>
+      <td>39924600.0</td>
+      <td>4523300</td>
+      <td>33020400.0</td>
+      <td>121173500.0</td>
+      <td>3939400.0</td>
+      <td>17843200</td>
+    </tr>
+  </tbody>
+</table>
+<p>15587 rows × 42 columns</p>
+</div></div></div>
+</div>
+<p>Well that was incredibly simple.</p>
+<br>
+<p>Usually, the next step will be to calculate the returns for each security. I do that by grabbing the adjusted close column and calculating the daily % change of each stock.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adj_close_df</span> <span class="o">=</span> <span class="n">df_data_raw</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">returns_df</span> <span class="o">=</span> <span class="n">adj_close_df</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">display_prettified_df</span><span class="p">(</span><span class="n">returns_df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+#T_195c7_row0_col0,#T_195c7_row0_col5,#T_195c7_row0_col6,#T_195c7_row1_col1,#T_195c7_row1_col2,#T_195c7_row1_col5,#T_195c7_row1_col6,#T_195c7_row2_col0,#T_195c7_row2_col1,#T_195c7_row2_col3,#T_195c7_row2_col4,#T_195c7_row2_col6,#T_195c7_row3_col1,#T_195c7_row3_col4,#T_195c7_row4_col3,#T_195c7_row4_col4,#T_195c7_row4_col5{
+            color:  red;
+        }#T_195c7_row0_col1,#T_195c7_row0_col2,#T_195c7_row0_col3,#T_195c7_row0_col4,#T_195c7_row1_col0,#T_195c7_row1_col3,#T_195c7_row1_col4,#T_195c7_row2_col2,#T_195c7_row2_col5,#T_195c7_row3_col0,#T_195c7_row3_col2,#T_195c7_row3_col3,#T_195c7_row3_col5,#T_195c7_row3_col6,#T_195c7_row4_col0,#T_195c7_row4_col1,#T_195c7_row4_col2,#T_195c7_row4_col6{
+            color:  green;
+        }</style><table id="T_195c7_" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >AAPL</th>        <th class="col_heading level0 col1" >AMZN</th>        <th class="col_heading level0 col2" >GE</th>        <th class="col_heading level0 col3" >MSFT</th>        <th class="col_heading level0 col4" >TSLA</th>        <th class="col_heading level0 col5" >V</th>        <th class="col_heading level0 col6" >XOM</th>    </tr>    <tr>        <th class="index_name level0" >Date</th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_195c7_level0_row0" class="row_heading level0 row0" >2023-11-27</th>
+                        <td id="T_195c7_row0_col0" class="data row0 col0" >-0.09%</td>
+                        <td id="T_195c7_row0_col1" class="data row0 col1" >0.67%</td>
+                        <td id="T_195c7_row0_col2" class="data row0 col2" >0.00%</td>
+                        <td id="T_195c7_row0_col3" class="data row0 col3" >0.31%</td>
+                        <td id="T_195c7_row0_col4" class="data row0 col4" >0.27%</td>
+                        <td id="T_195c7_row0_col5" class="data row0 col5" >-0.06%</td>
+                        <td id="T_195c7_row0_col6" class="data row0 col6" >-0.58%</td>
+            </tr>
+            <tr>
+                        <th id="T_195c7_level0_row1" class="row_heading level0 row1" >2023-11-28</th>
+                        <td id="T_195c7_row1_col0" class="data row1 col0" >0.32%</td>
+                        <td id="T_195c7_row1_col1" class="data row1 col1" >-0.47%</td>
+                        <td id="T_195c7_row1_col2" class="data row1 col2" >-0.93%</td>
+                        <td id="T_195c7_row1_col3" class="data row1 col3" >1.08%</td>
+                        <td id="T_195c7_row1_col4" class="data row1 col4" >4.51%</td>
+                        <td id="T_195c7_row1_col5" class="data row1 col5" >-0.47%</td>
+                        <td id="T_195c7_row1_col6" class="data row1 col6" >-0.06%</td>
+            </tr>
+            <tr>
+                        <th id="T_195c7_level0_row2" class="row_heading level0 row2" >2023-11-29</th>
+                        <td id="T_195c7_row2_col0" class="data row2 col0" >-0.54%</td>
+                        <td id="T_195c7_row2_col1" class="data row2 col1" >-0.48%</td>
+                        <td id="T_195c7_row2_col2" class="data row2 col2" >0.01%</td>
+                        <td id="T_195c7_row2_col3" class="data row2 col3" >-1.01%</td>
+                        <td id="T_195c7_row2_col4" class="data row2 col4" >-1.05%</td>
+                        <td id="T_195c7_row2_col5" class="data row2 col5" >0.51%</td>
+                        <td id="T_195c7_row2_col6" class="data row2 col6" >-1.50%</td>
+            </tr>
+            <tr>
+                        <th id="T_195c7_level0_row3" class="row_heading level0 row3" >2023-11-30</th>
+                        <td id="T_195c7_row3_col0" class="data row3 col0" >0.31%</td>
+                        <td id="T_195c7_row3_col1" class="data row3 col1" >-0.16%</td>
+                        <td id="T_195c7_row3_col2" class="data row3 col2" >2.47%</td>
+                        <td id="T_195c7_row3_col3" class="data row3 col3" >0.02%</td>
+                        <td id="T_195c7_row3_col4" class="data row3 col4" >-1.66%</td>
+                        <td id="T_195c7_row3_col5" class="data row3 col5" >0.96%</td>
+                        <td id="T_195c7_row3_col6" class="data row3 col6" >0.39%</td>
+            </tr>
+            <tr>
+                        <th id="T_195c7_level0_row4" class="row_heading level0 row4" >2023-12-01</th>
+                        <td id="T_195c7_row4_col0" class="data row4 col0" >0.68%</td>
+                        <td id="T_195c7_row4_col1" class="data row4 col1" >0.64%</td>
+                        <td id="T_195c7_row4_col2" class="data row4 col2" >0.57%</td>
+                        <td id="T_195c7_row4_col3" class="data row4 col3" >-1.16%</td>
+                        <td id="T_195c7_row4_col4" class="data row4 col4" >-0.52%</td>
+                        <td id="T_195c7_row4_col5" class="data row4 col5" >-0.09%</td>
+                        <td id="T_195c7_row4_col6" class="data row4 col6" >0.24%</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p>While we are here, might as well display the cumulative of these securities. I’m only going to show the data for the past year, because otherwise Tesla’s ridiculously large returns makes the chart look silly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_returns</span> <span class="o">=</span> <span class="n">returns_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">cumulaitve_returns_df</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">filtered_returns</span><span class="p">)</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">cumulaitve_returns_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Wealth of $1 invested in each stock from 2023-01-01 to 2023-12-01&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Wealth ($)&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&#39;
+</pre></div>
+</div>
+<img alt="../_images/3_yf_overview_12_1.png" src="../_images/3_yf_overview_12_1.png" />
+</div>
+</div>
+</section>
+<section id="company-info">
+<h2>Company Info<a class="headerlink" href="#company-info" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">Ticker</span><span class="p">(</span><span class="s2">&quot;aapl&quot;</span><span class="p">)</span>
+<span class="n">aapl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>yfinance.Ticker object &lt;AAPL&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;regularMarketPrice&#39;: None, &#39;preMarketPrice&#39;: None, &#39;logo_url&#39;: &#39;&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">actions</span>
 </pre></div>
 </div>
 </div>
@@ -488,8 +1039,8 @@ use this as a base for many future notebooks.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>AAPL</th>
-      <th>KO</th>
+      <th>Dividends</th>
+      <th>Stock Splits</th>
     </tr>
     <tr>
       <th>Date</th>
@@ -499,29 +1050,29 @@ use this as a base for many future notebooks.</p>
   </thead>
   <tbody>
     <tr>
-      <th>2000-01-03</th>
-      <td>0.088753</td>
-      <td>-0.032189</td>
+      <th>1987-05-11</th>
+      <td>0.000536</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2000-01-04</th>
-      <td>-0.084310</td>
-      <td>0.001109</td>
+      <th>1987-06-16</th>
+      <td>0.000000</td>
+      <td>2.0</td>
     </tr>
     <tr>
-      <th>2000-01-05</th>
-      <td>0.014634</td>
-      <td>0.008859</td>
+      <th>1987-08-10</th>
+      <td>0.000536</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2000-01-06</th>
-      <td>-0.086539</td>
-      <td>0.001098</td>
+      <th>1987-11-17</th>
+      <td>0.000714</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2000-01-07</th>
-      <td>0.047369</td>
-      <td>0.065789</td>
+      <th>1988-02-12</th>
+      <td>0.000714</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -529,35 +1080,1030 @@ use this as a base for many future notebooks.</p>
       <td>...</td>
     </tr>
     <tr>
-      <th>2023-10-25</th>
-      <td>-0.013492</td>
-      <td>0.008627</td>
+      <th>2022-11-04</th>
+      <td>0.230000</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2023-10-26</th>
-      <td>-0.024606</td>
-      <td>-0.006058</td>
+      <th>2023-02-10</th>
+      <td>0.230000</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2023-10-27</th>
-      <td>0.007969</td>
-      <td>-0.009681</td>
+      <th>2023-05-12</th>
+      <td>0.240000</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2023-10-30</th>
-      <td>0.012305</td>
-      <td>0.016474</td>
+      <th>2023-08-11</th>
+      <td>0.240000</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>2023-10-31</th>
-      <td>0.002819</td>
-      <td>0.006055</td>
+      <th>2023-11-10</th>
+      <td>0.240000</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>5996 rows × 2 columns</p>
+<p>86 rows × 2 columns</p>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">option_chain</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Options(calls=         contractSymbol             lastTradeDate  strike  lastPrice    bid  \
+0   AAPL231208C00095000 2023-12-01 20:58:00+00:00    95.0      96.45  96.10   
+1   AAPL231208C00125000 2023-12-01 19:46:08+00:00   125.0      66.23  66.10   
+2   AAPL231208C00130000 2023-12-01 19:49:26+00:00   130.0      61.15  61.15   
+3   AAPL231208C00135000 2023-11-30 17:13:46+00:00   135.0      53.67  56.15   
+4   AAPL231208C00140000 2023-12-01 19:22:47+00:00   140.0      51.21  51.15   
+5   AAPL231208C00145000 2023-12-01 18:51:51+00:00   145.0      46.20  46.15   
+6   AAPL231208C00150000 2023-11-30 20:41:53+00:00   150.0      41.27  41.10   
+7   AAPL231208C00155000 2023-11-30 20:50:48+00:00   155.0      36.26  36.15   
+8   AAPL231208C00160000 2023-12-01 17:01:44+00:00   160.0      31.24  31.20   
+9   AAPL231208C00165000 2023-12-01 20:10:37+00:00   165.0      26.27  26.20   
+10  AAPL231208C00170000 2023-12-01 20:57:11+00:00   170.0      21.40  21.20   
+11  AAPL231208C00175000 2023-12-01 20:59:02+00:00   175.0      16.45  16.20   
+12  AAPL231208C00180000 2023-12-01 20:56:02+00:00   180.0      11.40  11.25   
+13  AAPL231208C00185000 2023-12-01 20:59:10+00:00   185.0       6.56   6.45   
+14  AAPL231208C00190000 2023-12-01 20:59:52+00:00   190.0       2.40   2.40   
+15  AAPL231208C00195000 2023-12-01 20:59:59+00:00   195.0       0.33   0.33   
+16  AAPL231208C00200000 2023-12-01 20:59:48+00:00   200.0       0.05   0.04   
+17  AAPL231208C00205000 2023-12-01 20:23:14+00:00   205.0       0.01   0.01   
+18  AAPL231208C00210000 2023-12-01 20:10:50+00:00   210.0       0.01   0.00   
+19  AAPL231208C00215000 2023-11-27 15:12:12+00:00   215.0       0.01   0.00   
+20  AAPL231208C00220000 2023-12-01 19:33:04+00:00   220.0       0.01   0.00   
+21  AAPL231208C00225000 2023-11-20 19:31:01+00:00   225.0       0.02   0.00   
+22  AAPL231208C00230000 2023-11-21 17:20:40+00:00   230.0       0.01   0.00   
+23  AAPL231208C00235000 2023-11-16 14:51:44+00:00   235.0       0.02   0.00   
+24  AAPL231208C00240000 2023-11-10 15:29:55+00:00   240.0       0.01   0.00   
+
+      ask     change  percentChange  volume  openInterest  impliedVolatility  \
+0   96.65   2.000000       2.117523       2             1           2.343754   
+1   66.70   4.800003       7.813777       2             0           1.527346   
+2   61.70  20.450000      50.245700      57             1           1.431643   
+3   56.70   0.000000       0.000000       3             5           1.306644   
+4   51.70   1.689999       3.412760       3             5           1.187504   
+5   46.70   0.450001       0.983608       1           140           1.070317   
+6   41.70   1.910000       4.852642       2            57           0.933594   
+7   36.75   1.709999       4.949346       2            80           0.862306   
+8   31.70   2.580000       9.002093       3           113           0.750003   
+9   26.70   1.870001       7.663938       5            87           0.640629   
+10  21.75   1.199999       5.940588     389           533           0.542973   
+11  16.80   1.760001      11.980947     112          1139           0.530278   
+12  11.70   1.089999      10.572251    1159          2877           0.378912   
+13   6.75   0.860000      15.087722    1652         11738           0.256843   
+14   2.45   0.580000      31.868134   18532         10723           0.180672   
+15   0.35   0.060000      22.222223   15969         14220           0.157723   
+16   0.05   0.010000      25.000006    3458         15939           0.183602   
+17   0.02  -0.010000     -50.000000     142          2575           0.232430   
+18   0.01   0.000000       0.000000      37          1024           0.281257   
+19   0.01   0.000000       0.000000      70           277           0.343757   
+20   0.01   0.000000       0.000000      11           381           0.398444   
+21   0.01   0.000000       0.000000       7           238           0.453130   
+22   0.01   0.000000       0.000000       3           194           0.515630   
+23   0.01   0.000000       0.000000      30           150           0.531255   
+24   0.01   0.000000       0.000000      27            27           0.578129   
+
+    inTheMoney contractSize currency  
+0         True      REGULAR      USD  
+1         True      REGULAR      USD  
+2         True      REGULAR      USD  
+3         True      REGULAR      USD  
+4         True      REGULAR      USD  
+5         True      REGULAR      USD  
+6         True      REGULAR      USD  
+7         True      REGULAR      USD  
+8         True      REGULAR      USD  
+9         True      REGULAR      USD  
+10        True      REGULAR      USD  
+11        True      REGULAR      USD  
+12        True      REGULAR      USD  
+13        True      REGULAR      USD  
+14        True      REGULAR      USD  
+15       False      REGULAR      USD  
+16       False      REGULAR      USD  
+17       False      REGULAR      USD  
+18       False      REGULAR      USD  
+19       False      REGULAR      USD  
+20       False      REGULAR      USD  
+21       False      REGULAR      USD  
+22       False      REGULAR      USD  
+23       False      REGULAR      USD  
+24       False      REGULAR      USD  , puts=         contractSymbol             lastTradeDate  strike  lastPrice    bid  \
+0   AAPL231208P00050000 2023-12-01 14:33:12+00:00    50.0       0.01   0.00   
+1   AAPL231208P00090000 2023-11-22 20:00:43+00:00    90.0       0.01   0.00   
+2   AAPL231208P00095000 2023-11-24 17:59:37+00:00    95.0       0.01   0.00   
+3   AAPL231208P00100000 2023-11-29 20:57:22+00:00   100.0       0.02   0.00   
+4   AAPL231208P00105000 2023-11-27 16:13:46+00:00   105.0       0.01   0.00   
+5   AAPL231208P00110000 2023-11-30 20:59:30+00:00   110.0       0.01   0.00   
+6   AAPL231208P00115000 2023-12-01 14:30:02+00:00   115.0       0.01   0.00   
+7   AAPL231208P00120000 2023-11-28 14:39:19+00:00   120.0       0.01   0.01   
+8   AAPL231208P00125000 2023-12-01 14:31:24+00:00   125.0       0.01   0.00   
+9   AAPL231208P00130000 2023-12-01 17:07:43+00:00   130.0       0.01   0.00   
+10  AAPL231208P00135000 2023-12-01 20:36:06+00:00   135.0       0.01   0.00   
+11  AAPL231208P00140000 2023-11-30 19:07:49+00:00   140.0       0.01   0.00   
+12  AAPL231208P00145000 2023-12-01 20:41:51+00:00   145.0       0.01   0.01   
+13  AAPL231208P00149000 2023-12-01 20:32:52+00:00   149.0       0.01   0.00   
+14  AAPL231208P00150000 2023-12-01 20:32:46+00:00   150.0       0.01   0.00   
+15  AAPL231208P00155000 2023-12-01 20:56:27+00:00   155.0       0.01   0.02   
+16  AAPL231208P00160000 2023-12-01 20:28:39+00:00   160.0       0.01   0.01   
+17  AAPL231208P00165000 2023-12-01 20:07:59+00:00   165.0       0.02   0.01   
+18  AAPL231208P00170000 2023-12-01 20:44:44+00:00   170.0       0.03   0.01   
+19  AAPL231208P00175000 2023-12-01 20:38:28+00:00   175.0       0.03   0.03   
+20  AAPL231208P00180000 2023-12-01 20:59:59+00:00   180.0       0.05   0.04   
+21  AAPL231208P00185000 2023-12-01 20:59:59+00:00   185.0       0.18   0.15   
+22  AAPL231208P00190000 2023-12-01 20:59:59+00:00   190.0       1.00   0.96   
+23  AAPL231208P00195000 2023-12-01 20:51:20+00:00   195.0       4.05   3.90   
+24  AAPL231208P00200000 2023-12-01 18:31:43+00:00   200.0       8.90   8.60   
+25  AAPL231208P00205000 2023-12-01 20:59:41+00:00   205.0      13.85  13.50   
+26  AAPL231208P00210000 2023-11-30 20:25:13+00:00   210.0      21.25  18.50   
+27  AAPL231208P00215000 2023-12-01 17:26:02+00:00   215.0      23.75  23.50   
+28  AAPL231208P00250000 2023-11-03 13:30:06+00:00   250.0      75.00  58.55   
+
+      ask    change  percentChange   volume  openInterest  impliedVolatility  \
+0    0.01 -0.010000     -50.000000      1.0             3           3.125002   
+1    0.01  0.000000       0.000000      NaN            32           1.812501   
+2    0.01  0.000000       0.000000     20.0           142           1.687502   
+3    0.01  0.000000       0.000000     45.0           189           1.562502   
+4    0.01  0.000000       0.000000    120.0           122           1.468753   
+5    0.02  0.000000       0.000000     70.0           586           1.437503   
+6    0.01  0.000000       0.000000      1.0           196           1.250004   
+7    0.02  0.000000       0.000000     20.0           257           1.265629   
+8    0.01  0.000000       0.000000    201.0           781           1.062505   
+9    0.01  0.000000       0.000000    138.0          3626           0.968750   
+10   0.01  0.000000       0.000000   3015.0          2149           0.875001   
+11   0.01  0.000000       0.000000     33.0           997           0.781252   
+12   0.02  0.000000       0.000000    230.0           843           0.781252   
+13   0.02  0.000000       0.000000     28.0           335           0.687503   
+14   0.02 -0.010000     -50.000000   1796.0          1232           0.671878   
+15   0.03 -0.010000     -50.000000     84.0           933           0.644535   
+16   0.03 -0.020000     -66.666670    263.0          1032           0.542973   
+17   0.02 -0.020000     -50.000000    217.0          2869           0.457037   
+18   0.03 -0.010000     -25.000000    159.0          2832           0.394537   
+19   0.04 -0.030000     -50.000000    474.0          4241           0.318366   
+20   0.06 -0.050000     -50.000000   4056.0         15081           0.245125   
+21   0.18 -0.190000     -51.351350  13267.0         12373           0.189461   
+22   1.00 -0.610000     -37.888200  22743.0         11830           0.158089   
+23   4.10 -1.150000     -22.115377    515.0          1661           0.156258   
+24   9.05 -1.950001     -17.972357     26.0            16           0.264656   
+25  14.05 -1.799999     -11.501594    174.0             8           0.367682   
+26  19.05  0.000000       0.000000      9.0             9           0.462408   
+27  24.05  0.500000       2.150538      1.0             0           0.550786   
+28  59.05  0.000000       0.000000      1.0             0           0.820314   
+
+    inTheMoney contractSize currency  
+0        False      REGULAR      USD  
+1        False      REGULAR      USD  
+2        False      REGULAR      USD  
+3        False      REGULAR      USD  
+4        False      REGULAR      USD  
+5        False      REGULAR      USD  
+6        False      REGULAR      USD  
+7        False      REGULAR      USD  
+8        False      REGULAR      USD  
+9        False      REGULAR      USD  
+10       False      REGULAR      USD  
+11       False      REGULAR      USD  
+12       False      REGULAR      USD  
+13       False      REGULAR      USD  
+14       False      REGULAR      USD  
+15       False      REGULAR      USD  
+16       False      REGULAR      USD  
+17       False      REGULAR      USD  
+18       False      REGULAR      USD  
+19       False      REGULAR      USD  
+20       False      REGULAR      USD  
+21       False      REGULAR      USD  
+22       False      REGULAR      USD  
+23        True      REGULAR      USD  
+24        True      REGULAR      USD  
+25        True      REGULAR      USD  
+26        True      REGULAR      USD  
+27        True      REGULAR      USD  
+28        True      REGULAR      USD  )
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">balance_sheet</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">cash_flow</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_4368</span>\<span class="mf">279430135.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">aapl</span><span class="o">.</span><span class="n">cash_flow</span>
+
+<span class="ne">AttributeError</span>: &#39;Ticker&#39; object has no attribute &#39;cash_flow&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">income_stmt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>2023-09-30</th>
+      <th>2022-09-30</th>
+      <th>2021-09-30</th>
+      <th>2020-09-30</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Tax Effect Of Unusual Items</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Tax Rate For Calcs</th>
+      <td>0.147192</td>
+      <td>0.162045</td>
+      <td>0.133023</td>
+      <td>0.144282</td>
+    </tr>
+    <tr>
+      <th>Normalized EBITDA</th>
+      <td>125820000000.0</td>
+      <td>130541000000.0</td>
+      <td>120233000000.0</td>
+      <td>77344000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income From Continuing Operation Net Minority Interest</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Reconciled Depreciation</th>
+      <td>11519000000.0</td>
+      <td>11104000000.0</td>
+      <td>11284000000.0</td>
+      <td>11056000000.0</td>
+    </tr>
+    <tr>
+      <th>Reconciled Cost Of Revenue</th>
+      <td>214137000000.0</td>
+      <td>223546000000.0</td>
+      <td>212981000000.0</td>
+      <td>169559000000.0</td>
+    </tr>
+    <tr>
+      <th>EBITDA</th>
+      <td>125820000000.0</td>
+      <td>130541000000.0</td>
+      <td>120233000000.0</td>
+      <td>77344000000.0</td>
+    </tr>
+    <tr>
+      <th>EBIT</th>
+      <td>114301000000.0</td>
+      <td>119437000000.0</td>
+      <td>108949000000.0</td>
+      <td>66288000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Interest Income</th>
+      <td>NaN</td>
+      <td>-106000000.0</td>
+      <td>198000000.0</td>
+      <td>890000000.0</td>
+    </tr>
+    <tr>
+      <th>Interest Expense</th>
+      <td>NaN</td>
+      <td>2931000000.0</td>
+      <td>2645000000.0</td>
+      <td>2873000000.0</td>
+    </tr>
+    <tr>
+      <th>Interest Income</th>
+      <td>NaN</td>
+      <td>2825000000.0</td>
+      <td>2843000000.0</td>
+      <td>3763000000.0</td>
+    </tr>
+    <tr>
+      <th>Normalized Income</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income From Continuing And Discontinued Operation</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Total Expenses</th>
+      <td>268984000000.0</td>
+      <td>274891000000.0</td>
+      <td>256868000000.0</td>
+      <td>208227000000.0</td>
+    </tr>
+    <tr>
+      <th>Total Operating Income As Reported</th>
+      <td>114301000000.0</td>
+      <td>119437000000.0</td>
+      <td>108949000000.0</td>
+      <td>66288000000.0</td>
+    </tr>
+    <tr>
+      <th>Diluted Average Shares</th>
+      <td>15812547000.0</td>
+      <td>16325819000.0</td>
+      <td>16864919000.0</td>
+      <td>17528214000.0</td>
+    </tr>
+    <tr>
+      <th>Basic Average Shares</th>
+      <td>15744231000.0</td>
+      <td>16215963000.0</td>
+      <td>16701272000.0</td>
+      <td>17352119000.0</td>
+    </tr>
+    <tr>
+      <th>Diluted EPS</th>
+      <td>6.13</td>
+      <td>6.11</td>
+      <td>5.61</td>
+      <td>3.28</td>
+    </tr>
+    <tr>
+      <th>Basic EPS</th>
+      <td>6.16</td>
+      <td>6.15</td>
+      <td>5.67</td>
+      <td>3.31</td>
+    </tr>
+    <tr>
+      <th>Diluted NI Availto Com Stockholders</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income Common Stockholders</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income Including Noncontrolling Interests</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Income Continuous Operations</th>
+      <td>96995000000.0</td>
+      <td>99803000000.0</td>
+      <td>94680000000.0</td>
+      <td>57411000000.0</td>
+    </tr>
+    <tr>
+      <th>Tax Provision</th>
+      <td>16741000000.0</td>
+      <td>19300000000.0</td>
+      <td>14527000000.0</td>
+      <td>9680000000.0</td>
+    </tr>
+    <tr>
+      <th>Pretax Income</th>
+      <td>113736000000.0</td>
+      <td>119103000000.0</td>
+      <td>109207000000.0</td>
+      <td>67091000000.0</td>
+    </tr>
+    <tr>
+      <th>Other Income Expense</th>
+      <td>-565000000.0</td>
+      <td>-334000000.0</td>
+      <td>258000000.0</td>
+      <td>803000000.0</td>
+    </tr>
+    <tr>
+      <th>Other Non Operating Income Expenses</th>
+      <td>-565000000.0</td>
+      <td>-334000000.0</td>
+      <td>258000000.0</td>
+      <td>803000000.0</td>
+    </tr>
+    <tr>
+      <th>Net Non Operating Interest Income Expense</th>
+      <td>NaN</td>
+      <td>-106000000.0</td>
+      <td>198000000.0</td>
+      <td>890000000.0</td>
+    </tr>
+    <tr>
+      <th>Interest Expense Non Operating</th>
+      <td>NaN</td>
+      <td>2931000000.0</td>
+      <td>2645000000.0</td>
+      <td>2873000000.0</td>
+    </tr>
+    <tr>
+      <th>Interest Income Non Operating</th>
+      <td>NaN</td>
+      <td>2825000000.0</td>
+      <td>2843000000.0</td>
+      <td>3763000000.0</td>
+    </tr>
+    <tr>
+      <th>Operating Income</th>
+      <td>114301000000.0</td>
+      <td>119437000000.0</td>
+      <td>108949000000.0</td>
+      <td>66288000000.0</td>
+    </tr>
+    <tr>
+      <th>Operating Expense</th>
+      <td>54847000000.0</td>
+      <td>51345000000.0</td>
+      <td>43887000000.0</td>
+      <td>38668000000.0</td>
+    </tr>
+    <tr>
+      <th>Research And Development</th>
+      <td>29915000000.0</td>
+      <td>26251000000.0</td>
+      <td>21914000000.0</td>
+      <td>18752000000.0</td>
+    </tr>
+    <tr>
+      <th>Selling General And Administration</th>
+      <td>24932000000.0</td>
+      <td>25094000000.0</td>
+      <td>21973000000.0</td>
+      <td>19916000000.0</td>
+    </tr>
+    <tr>
+      <th>Gross Profit</th>
+      <td>169148000000.0</td>
+      <td>170782000000.0</td>
+      <td>152836000000.0</td>
+      <td>104956000000.0</td>
+    </tr>
+    <tr>
+      <th>Cost Of Revenue</th>
+      <td>214137000000.0</td>
+      <td>223546000000.0</td>
+      <td>212981000000.0</td>
+      <td>169559000000.0</td>
+    </tr>
+    <tr>
+      <th>Total Revenue</th>
+      <td>383285000000.0</td>
+      <td>394328000000.0</td>
+      <td>365817000000.0</td>
+      <td>274515000000.0</td>
+    </tr>
+    <tr>
+      <th>Operating Revenue</th>
+      <td>383285000000.0</td>
+      <td>394328000000.0</td>
+      <td>365817000000.0</td>
+      <td>274515000000.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">news</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;uuid&#39;: &#39;292ff4dc-e04c-36b3-b578-f4780ea6cebb&#39;,
+  &#39;title&#39;: &#39;Zoom quietly makes its way to Apple TV&#39;,
+  &#39;publisher&#39;: &#39;AppleInsider&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/m/292ff4dc-e04c-36b3-b578-f4780ea6cebb/zoom-quietly-makes-its-way-to.html&#39;,
+  &#39;providerPublishTime&#39;: 1701561593,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/aHtncOYwrZ9o9L4B.wjluA--~B/aD03MzE7dz0xMzEyO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/ab45575788fca517735039bfc6cdaf0e&#39;,
+     &#39;width&#39;: 1312,
+     &#39;height&#39;: 731,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/QXHJF5ZjcTrQh_U8PaJevw--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/ab45575788fca517735039bfc6cdaf0e&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;]},
+ {&#39;uuid&#39;: &#39;dd2c5883-2a06-3f90-949d-10d3b7f907e8&#39;,
+  &#39;title&#39;: &#39;Even After Black Friday, These 7 Costco Electronics Are Still Great Holiday Deals&#39;,
+  &#39;publisher&#39;: &#39;GOBankingRates&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/news/even-black-friday-7-costco-200012460.html&#39;,
+  &#39;providerPublishTime&#39;: 1701547212,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/3_NbadAKIr6hBzvesD5B4g--~B/aD0xMDgwO3c9MTkyMDthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/gobankingrates_644/01c13c2b167fea65fbea386be950e78b&#39;,
+     &#39;width&#39;: 1920,
+     &#39;height&#39;: 1080,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/HfWHv1HXgT0s8N0wuv7BFQ--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/gobankingrates_644/01c13c2b167fea65fbea386be950e78b&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;COST&#39;, &#39;AAPL&#39;]},
+ {&#39;uuid&#39;: &#39;0e76c7ea-9585-3d8d-8b9c-13ccbfffce07&#39;,
+  &#39;title&#39;: &#39;JP Morgan’s Top 15 Stock Picks for 2023 and Now&#39;,
+  &#39;publisher&#39;: &#39;Insider Monkey&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/news/jp-morgan-top-15-stock-190553259.html&#39;,
+  &#39;providerPublishTime&#39;: 1701543953,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/JZaTfhcnTucEU56xL1IgtA--~B/aD02Njc7dz0xMDAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/insidermonkey.com/457b231342a0f9561be501c0f3bc921c&#39;,
+     &#39;width&#39;: 1000,
+     &#39;height&#39;: 667,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/ldTTZ6KxSeV2Po2acr3nwg--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/insidermonkey.com/457b231342a0f9561be501c0f3bc921c&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;JPM&#39;,
+   &#39;NEE&#39;,
+   &#39;JNJ&#39;,
+   &#39;MA&#39;,
+   &#39;MSFT&#39;,
+   &#39;NVDA&#39;,
+   &#39;NXPI&#39;,
+   &#39;TSLA&#39;,
+   &#39;INTU&#39;,
+   &#39;AAPL&#39;,
+   &#39;REGN&#39;,
+   &#39;XOM&#39;,
+   &#39;LOW&#39;,
+   &#39;WFC&#39;]},
+ {&#39;uuid&#39;: &#39;d45ba2b6-89b3-3677-ad77-28f542efcbb5&#39;,
+  &#39;title&#39;: &#39;How to master the camera app on iPhone 15 Pro &amp; 15 Pro Max&#39;,
+  &#39;publisher&#39;: &#39;AppleInsider&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/m/d45ba2b6-89b3-3677-ad77-28f542efcbb5/how-to-master-the-camera-app.html&#39;,
+  &#39;providerPublishTime&#39;: 1701539100,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/F6wBjveLjBWu_erEuOBYYQ--~B/aD03Mzg7dz0xMzEyO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/0aab375c434295df2896415c4d5662c5&#39;,
+     &#39;width&#39;: 1312,
+     &#39;height&#39;: 738,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/ssmDJdPXadMo3Fiuxt0ajA--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/0aab375c434295df2896415c4d5662c5&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;]},
+ {&#39;uuid&#39;: &#39;25a2ef9f-21c3-3a1b-9196-b6175323ef83&#39;,
+  &#39;title&#39;: &#39;How to manage notifications in iOS 17 and iPadOS 17&#39;,
+  &#39;publisher&#39;: &#39;AppleInsider&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/m/25a2ef9f-21c3-3a1b-9196-b6175323ef83/how-to-manage-notifications.html&#39;,
+  &#39;providerPublishTime&#39;: 1701532153,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/Gj.ILTEc3Rc6636XSdq3jg--~B/aD03MzE7dz0xMzEyO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/4fc6f1a4c1a18f6396f3deaa65ce324a&#39;,
+     &#39;width&#39;: 1312,
+     &#39;height&#39;: 731,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/KhfC5pfMkuiOkmxmQwlFUg--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/4fc6f1a4c1a18f6396f3deaa65ce324a&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;]},
+ {&#39;uuid&#39;: &#39;8ca7bd63-c249-3cef-a1f0-40df59175963&#39;,
+  &#39;title&#39;: &#39;Apple releases urgent iOS update due to security exploits&#39;,
+  &#39;publisher&#39;: &#39;Fox Business&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/news/apple-releases-urgent-ios-due-152453756.html&#39;,
+  &#39;providerPublishTime&#39;: 1701530693,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/FQtgOLGWPJivE8MVpHUgLQ--~B/aD03MjA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/fox_business_text_367/267987e879be42b23ce99baa7e4f0d17&#39;,
+     &#39;width&#39;: 1280,
+     &#39;height&#39;: 720,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/WUJrBE.csdphAz3xaXNdUA--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/fox_business_text_367/267987e879be42b23ce99baa7e4f0d17&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;]},
+ {&#39;uuid&#39;: &#39;5c0763d9-3367-3c08-896c-ba2af5b5e747&#39;,
+  &#39;title&#39;: &#39;Digital Payments Are Having a Jolly Holiday&#39;,
+  &#39;publisher&#39;: &#39;The Wall Street Journal&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/m/5c0763d9-3367-3c08-896c-ba2af5b5e747/digital-payments-are-having-a.html&#39;,
+  &#39;providerPublishTime&#39;: 1701522000,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/LJ0rKAG3n1B1QWYilR8ITg--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/wsj.com/7b31a7dc84045207833d536b9635d4e7&#39;,
+     &#39;width&#39;: 1280,
+     &#39;height&#39;: 640,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/UrZGFiGtd1ngUdlSwp_tdQ--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/wsj.com/7b31a7dc84045207833d536b9635d4e7&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;, &#39;SHOP&#39;]},
+ {&#39;uuid&#39;: &#39;738b767d-4a13-311e-accc-de097e0f8c8a&#39;,
+  &#39;title&#39;: &quot;iPhone 15 Portrait Mode in focus for &#39;Album Cover&#39; ad spot&quot;,
+  &#39;publisher&#39;: &#39;AppleInsider&#39;,
+  &#39;link&#39;: &#39;https://finance.yahoo.com/m/738b767d-4a13-311e-accc-de097e0f8c8a/iphone-15-portrait-mode-in.html&#39;,
+  &#39;providerPublishTime&#39;: 1701521209,
+  &#39;type&#39;: &#39;STORY&#39;,
+  &#39;thumbnail&#39;: {&#39;resolutions&#39;: [{&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/soe0cvOjl7x7YsCMWrSVnw--~B/aD03MzE7dz0xMzEyO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/54bf32a7fef1fd4cd6eb3c2f7f6cd7d0&#39;,
+     &#39;width&#39;: 1312,
+     &#39;height&#39;: 731,
+     &#39;tag&#39;: &#39;original&#39;},
+    {&#39;url&#39;: &#39;https://s.yimg.com/uu/api/res/1.2/qJ5zDMQMYYKiNRbx8Ug0IA--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/appleinsider_865/54bf32a7fef1fd4cd6eb3c2f7f6cd7d0&#39;,
+     &#39;width&#39;: 140,
+     &#39;height&#39;: 140,
+     &#39;tag&#39;: &#39;140x140&#39;}]},
+  &#39;relatedTickers&#39;: [&#39;AAPL&#39;]}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">isin</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;US0378331005&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aapl</span><span class="o">.</span><span class="n">institutional_holders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Holder</th>
+      <th>Shares</th>
+      <th>Date Reported</th>
+      <th>% Out</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Vanguard Group Inc</td>
+      <td>1299997133</td>
+      <td>2023-09-29</td>
+      <td>0.0836</td>
+      <td>248611458856</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Blackrock Inc.</td>
+      <td>1031407553</td>
+      <td>2023-09-29</td>
+      <td>0.0663</td>
+      <td>197246386101</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Berkshire Hathaway, Inc</td>
+      <td>915560382</td>
+      <td>2023-09-29</td>
+      <td>0.0589</td>
+      <td>175091772483</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>State Street Corporation</td>
+      <td>569291690</td>
+      <td>2023-09-29</td>
+      <td>0.0366</td>
+      <td>108871345922</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FMR, LLC</td>
+      <td>298321726</td>
+      <td>2023-09-29</td>
+      <td>0.0192</td>
+      <td>57051048518</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Geode Capital Management, LLC</td>
+      <td>296103070</td>
+      <td>2023-09-29</td>
+      <td>0.0190</td>
+      <td>56626752733</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Price (T.Rowe) Associates Inc</td>
+      <td>216307878</td>
+      <td>2023-09-29</td>
+      <td>0.0139</td>
+      <td>41366719776</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Morgan Stanley</td>
+      <td>206732960</td>
+      <td>2023-09-29</td>
+      <td>0.0133</td>
+      <td>39535612406</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Northern Trust Corporation</td>
+      <td>168874976</td>
+      <td>2023-09-29</td>
+      <td>0.0109</td>
+      <td>32295651337</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Norges Bank Investment Management</td>
+      <td>167374278</td>
+      <td>2022-12-30</td>
+      <td>0.0108</td>
+      <td>32008657844</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show how the adjusted close price is calculated</span>
+<span class="n">aapl</span><span class="o">.</span><span class="n">history</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume</th>
+      <th>Dividends</th>
+      <th>Stock Splits</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1980-12-12 00:00:00-05:00</th>
+      <td>0.099319</td>
+      <td>0.099750</td>
+      <td>0.099319</td>
+      <td>0.099319</td>
+      <td>469033600</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1980-12-15 00:00:00-05:00</th>
+      <td>0.094569</td>
+      <td>0.094569</td>
+      <td>0.094137</td>
+      <td>0.094137</td>
+      <td>175884800</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1980-12-16 00:00:00-05:00</th>
+      <td>0.087659</td>
+      <td>0.087659</td>
+      <td>0.087228</td>
+      <td>0.087228</td>
+      <td>105728000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1980-12-17 00:00:00-05:00</th>
+      <td>0.089387</td>
+      <td>0.089818</td>
+      <td>0.089387</td>
+      <td>0.089387</td>
+      <td>86441600</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1980-12-18 00:00:00-05:00</th>
+      <td>0.091978</td>
+      <td>0.092410</td>
+      <td>0.091978</td>
+      <td>0.091978</td>
+      <td>73449600</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-11-27 00:00:00-05:00</th>
+      <td>189.919998</td>
+      <td>190.669998</td>
+      <td>188.899994</td>
+      <td>189.789993</td>
+      <td>40552600</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2023-11-28 00:00:00-05:00</th>
+      <td>189.779999</td>
+      <td>191.080002</td>
+      <td>189.399994</td>
+      <td>190.399994</td>
+      <td>38415400</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2023-11-29 00:00:00-05:00</th>
+      <td>190.899994</td>
+      <td>192.089996</td>
+      <td>188.970001</td>
+      <td>189.369995</td>
+      <td>43014200</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2023-11-30 00:00:00-05:00</th>
+      <td>189.839996</td>
+      <td>190.320007</td>
+      <td>188.190002</td>
+      <td>189.949997</td>
+      <td>48794400</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2023-12-01 00:00:00-05:00</th>
+      <td>190.330002</td>
+      <td>191.559998</td>
+      <td>189.229996</td>
+      <td>191.240005</td>
+      <td>45679300</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10834 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Equal-Weight Portfolio vs other stuff</p></li>
+</ul>
 </section>
 </section>
 
